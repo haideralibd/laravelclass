@@ -15,9 +15,11 @@ use Illuminate\http\Request;
  
     return view('welcome');
 });*/
+Route::get('/mycart', 'CartController@mycart');
+Route::post('/add-to-cart','CartController@addToCart');
+
 
 Route::get('/','HomeController@index');
-
 Route::resource('/product','ProductController');
 
 
