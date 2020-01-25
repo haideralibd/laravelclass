@@ -128,6 +128,7 @@ $(document).ready(function() {
       //data : dataString,                    
       success : function(status) {
       window.location.href = '{{url('/')}}/mycart';   
+      
       }
   });
     

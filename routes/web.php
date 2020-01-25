@@ -27,6 +27,13 @@ Route::view('/about', 'about');
 
 Route::view('/contact_us', 'contact');
 
+
+Route::any('/cartItemDelete/{temp_order_row_id}', 'CartController@cartItemDelete');
+
+Route::any('/cartItemDeleteAll', 'CartController@cartItemDeleteAll');
+
+Route::post('/update-cart','CartController@updateCart');
+
 Route::post('/submit-contact', function (Request $request){
 //	dd($request);
 	$data = array('name'=>$request->username,'email' => $request->email, 'message' => $request->message);

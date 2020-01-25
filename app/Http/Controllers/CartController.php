@@ -54,4 +54,35 @@ public function addToCart(Request $request){
         return view('cart', ['data'=>$data]);
 	}
 
+	public function updateCart(Request $request){
+		//dd($request);
+
+			if(! session()->has('tracking_number')){
+			session()->put('tracking_number', Session::getId());
+		}
+		$product_info = DB::table('temp_orders')->where('temp_order_row_id', $request->temp_order_row_id)->first();
+		$product_price = DB::table('products')->where('product_row_id', $product_info->product_row_id)->first()->product_price;
+		$product_qty = $request->qty_textbox;
+
+		DB::table('temp_orders')->where('temp_order_row_id', $request->temp_order_row_id)->update(['product_qty'=> $product_qty, 'product_total_price'=> ($product_price * $product_qty)]);
+		return redirect('/mycart');
+	}
+
+		public function cartItemDelete($temp_order_row_id){
+			if(! session()->has('tracking_number')){
+			session()->put('tracking_number', Session::getId());
+		}
+
+		DB::table('temp_orders')->where('tracking_number', session()->get('tracking_number'))->where('temp_order_row_id', $temp_order_row_id)->delete();
+
+		echo 1;
+		}
+
+		public function cartItemDeleteAll() {
+			if(! session()->has('tracking_number')){
+				session()->put('tracking_number', Session::getId());
+			}
+			DB::table('temp_orders')->where('tracking_number', session()->get('tracking_number'))->delete();	
+					
+		}
 	}
